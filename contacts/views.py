@@ -3,6 +3,18 @@ from .models import Contact
 
 # Create your views here.
 
+def home_view(request):
+    contacts = Contact.objects.all()
+    search_input = request.GET.get('search-area') 
+    #Cnvert the below to destination search
+    if search_input:
+        contacts = Contact.objects.filter(full_name__icontains=search_input)
+    else:
+        contacts = Contact.objects.all()
+        search_input = ''
+    # return render(request, 'home.html', {'contacts': contacts, 'search_input': search_input})
+    return render(request, 'home.html', {})
+
 def index(request):
     contacts = Contact.objects.all()
     search_input = request.GET.get('search-area')
